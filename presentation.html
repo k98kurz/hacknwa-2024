@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+
+  landslide modifications: Adam Zapletal (adamzap@gmail.com)
+                           Nicolas Perriault (nperriault@gmail.com)
+-->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Blockchain Technologies</title>
+    <!-- Styles -->
+    
+    <link rel="stylesheet" media="print" href="file:///home/sithlord/.local/lib/python3.10/site-packages/landslide/themes/default/css/print.css">
+    <link rel="stylesheet" media="screen, projection" href="file:///home/sithlord/.local/lib/python3.10/site-packages/landslide/themes/default/css/screen.css">
+    
+    
+    <!-- /Styles -->
+    <!-- Javascripts -->
+    
+    <script type="text/javascript" src="file:///home/sithlord/.local/lib/python3.10/site-packages/landslide/themes/default/js/slides.js"></script>
+    
+    
+    
+    <!-- /Javascripts -->
+</head>
+<body>
+  <div id="blank"></div>
+  <div class="presentation">
+    <div id="current_presenter_notes">
+      <div id="presenter_note"></div>
+    </div>
+    <div class="slides">
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-1">
+          <div class="inner">
+            
+            <header><h1>Blockchain Technologies</h1></header>
+            
+            
+            <section><h2>Introduction</h2>
+<p>Three sections:</p>
+<ol>
+<li>Blockchain primitives and some history</li>
+<li>Layer 2 technologies</li>
+<li>Advanced cryptography</li>
+</ol>
+<h2>What is a blockchain?</h2>
+<p>Prepend-only linked list with cryptographic verification features that is read
+in reverse by convention and maintained by a replicated state machine governed
+by a consensus mechanism.</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              1/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-2">
+          <div class="inner">
+            
+            <header><h1>Blockchain Primitives</h1></header>
+            
+            
+            <section><h2>Blitzkrieg Explication</h2>
+<p>Three + 1 kinds of primitives:</p>
+<ol>
+<li>Cryptography</li>
+<li>Data structure</li>
+<li>Consensus</li>
+<li>Virtual machine</li>
+</ol></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              2/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-3">
+          <div class="inner">
+            
+            <header><h1>Cryptography</h1></header>
+            
+            
+            <section><p>Two cryptographic primitives used in blockchains:</p>
+<ol>
+<li>Cryptographic hash functions</li>
+<li>Digital signature algorithms</li>
+</ol></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              3/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-4">
+          <div class="inner">
+            
+            <header><h1>Cryptographic Hash Functions</h1></header>
+            
+            
+            <section><p>A function <em><code>h</code></em> that takes a variable length input and produces a fixed length
+output. It must have the following qualities:</p>
+<ol>
+<li>Deterministic computation: given an input <em><code>I</code></em>, the output <em><code>O = h(I)</code></em> will be the same
+every time it is calculated.</li>
+<li>Collision resistance: given inputs <em><code>I1</code></em> and <em><code>I2</code></em> and outputs <em><code>O1 = h(I1)</code></em> and
+<em><code>O2 = h(I2)</code></em>, the likelihood that <em><code>O1 == O2</code></em> is astronomically low as long as <em><code>I1 != I2</code></em>.
+E.g. in SHA256 with 2^256 possible outputs, that likelihood is approximately 1/2^256.
+(2^256 ≈ 10^77; there are estimated to be about 10^80 atoms in the universe, or about 1000 atoms
+per SHA256 output)</li>
+<li>Irreversible: given an output <em><code>O = h(I)</code></em>, it is impossible to calculate the input <em><code>I</code></em>.</li>
+<li>Unpredictable: given an input <em><code>I</code></em> and output <em><code>O = h(I)</code></em>, it is impossible to predict how
+<em><code>O</code></em> will change after some change to <em><code>I</code></em>.</li>
+</ol></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <p>10^80 is called the Eddington number.</p>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              4/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-5">
+          <div class="inner">
+            
+            <header><h1>Example using SHA256 bitstrings:</h1></header>
+            
+            
+            <section><p>Inputs:</p>
+<ul>
+<li>00000000</li>
+<li>00000001</li>
+</ul>
+<p>Outputs and their XOR:</p>
+<ul>
+<li>110111000110100000010111001110011111111101100110111101010011000100111001010...</li>
+<li>100101111110101000100100010111100110100010001010101010011000101001110111101...</li>
+<li>010010111000001000110011011001111001011111101100010111001011101101001110111...</li>
+</ul>
+<p>Changing 1 input bit changes approximately half of the output bits.</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              5/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-6">
+          <div class="inner">
+            
+            <header><h1>Digital Signature Algorithms</h1></header>
+            
+            
+            <section><p>A digital signature algorithm can be described in four functions:</p>
+<ol>
+<li>Private key generator: <code>prvkey = f1(seed)</code></li>
+<li>Public key generator/deriver: <code>pubkey = f2(prvkey)</code></li>
+<li>Signer of arbitrary data using a private key: <code>sig = f3(data, prvkey)</code></li>
+<li>Verifier of signatures using a public key: <code>valid = f4(sig, data, pubkey)</code>,
+which returns false if the signature is not valid for the data and the public key.</li>
+</ol></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <p>A system for creating cryptographic proofs using a private key that can be
+verified by anyone with the corresponding public key. Can be used for authenticaiton,
+authorization, or attestation.</p>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              6/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-7">
+          <div class="inner">
+            
+            <header><h1>Digital Signature Algorithms</h1></header>
+            
+            
+            <section><p>Probabilistic security guarantees:</p>
+<ol>
+<li>Authentication: ensure the signer of a block of data is who they claim to be.</li>
+<li>Integrity: ensure the content of the block of data has not been altered since
+it was signed.</li>
+<li>Non-repudiation: prevent the signer from denying that they signed the data
+block, providing evidence of their attestation of or interaction with the data.</li>
+</ol></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <p>Modern digital signature algorithms provide the following probabilistic security
+guarantees. Elliptic curve DSA and Schnorr are most common, but lattice-based
+post-quantum DSAs are being finalized by NIST (Signal protocol already adopted
+a PQ latice system for DHE and DSA).</p>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              7/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-8">
+          <div class="inner">
+            
+            <header><h1>Data Structures</h1></header>
+            
+            
+            <section><p>Both fundamental blockchain data structures are directed acyclic graphs (DAGs):</p>
+<ol>
+<li>Linked list</li>
+<li>Merkle tree</li>
+</ol></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              8/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-9">
+          <div class="inner">
+            
+            <header><h1>Linked List</h1></header>
+            
+            
+            <section><p>A linked list is a sequence of items that each contain a reference (link) to the
+next item in the sequence.</p>
+<pre>
+item0 = {
+    data0,
+    link_to_item1
+}
+
+item1 = {
+    data1,
+    link_to_item2
+}
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              9/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-10">
+          <div class="inner">
+            
+            <header><h1>Linked List</h1></header>
+            
+            
+            <section><p>In effect, a linked list is a directed graph where each node has in-degree and
+out-degree each of either 0 or 1.</p>
+<p>[node] --&gt; [node] --&gt; [node]</p>
+<p>In a blockchain, the order is reversed by convention:</p>
+<p>[block] &lt;-- [block] &lt;-- [block]</p>
+<p>Importantly, the way that edges in this graph are encoded (hash function)
+makes the formation of a cycle impossible. Hence, a blockchain is a directed
+acyclic graph with maximum in-degree and out-degree of 1 for each node.</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              10/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-11">
+          <div class="inner">
+            
+            <header><h1>Merkle Tree</h1></header>
+            
+            
+            <section><pre>
+[leaf0] [leaf1] [leaf2] [leaf3]
+     \     /      \     /
+     [node0]      [node1]
+           \      /
+            [root]
+
+node0 = hash(hash(leaf0) || hash(leaf1))
+node1 = hash(hash(leaf2) || hash(leaf3))
+root = hash(node0 || node1)
+</pre>
+
+<p>A Merkle tree is a tree structure that uuses a cryptographic hash function to
+combine a number of items, called "leaves", in pairs to form nodes, then
+recursively combines nodes in pairs until it arrives at a single value, called
+the root.</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <ul>
+<li>Diagrams are normally upside down with the root at the top and the leaves
+at the bottom, but that's not how trees work.</li>
+<li>A Merkle tree is also a directed acyclic graph: the root links to the nodes
+above/before it, and those nodes link to prior nodes or leaves. The way these
+links are encoded and aggregated (cryptographic hash function) ensures that
+cycles are impossible.</li>
+</ul>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              11/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-12">
+          <div class="inner">
+            
+            <header><h1>Merkle Tree</h1></header>
+            
+            
+            <section><pre>
+[leaf0] [leaf1] [leaf2] [leaf3]
+     \     /      \     /
+     [node0]      [node1]
+           \      /
+            [root]
+
+node0 = hash(hash(leaf0) || hash(leaf1))
+node1 = hash(hash(leaf2) || hash(leaf3))
+root = hash(node0 || node1)
+</pre>
+
+<h2>Proof for leaf1</h2>
+<pre>
+bool verify(root, leaf, proof) {
+    let sum <- hash(leaf)
+    for step in proof {
+        if step is right {
+            sum <- hash(sum || step)
+        } else {
+            sum <- hash(step || sum)
+        }
+    }
+    return sum == root
+}
+
+proof = [{hash(leaf0): left}, {node1: right}]
+assert verify(root, leaf1, proof)
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <ul>
+<li>A Merkle tree root commits to a data set of arbitrary size.</li>
+<li>Using a Merkle tree, a data set inclusion proof can be generated with size
+that scales with the logarithm of the number of set members.</li>
+</ul>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              12/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-13">
+          <div class="inner">
+            
+            <header><h1>Merkle Tree (Taproot Edition)</h1></header>
+            
+            
+            <section><pre>
+[leaf0] [leaf1] [leaf2] [leaf3]
+     \     /      \     /
+     [node0]      [node1]
+           \      /
+            [root]
+
+node0 = xor(hash(hash(leaf0)), hash(hash(leaf1)))
+node1 = xor(hash(hash(leaf2)), hash(hash(leaf3)))
+root = xor(hash(node0), hash(node1))
+</pre>
+
+<h2>Proof for leaf1</h2>
+<pre>
+bool verify(root, leaf, proof) {
+    let sum <- leaf
+    for step in proof {
+        sum <- xor(hash(sum), hash(step))
+    }
+    return sum == root
+}
+
+proof = [leaf0, node1]
+assert verify(root, leaf1, proof)
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <ul>
+<li>With the Taproot upgrade, the Bitcoin core dev team introduced a new, more
+flexible version of the Merkle tree that removes handedness in proofs.</li>
+</ul>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              13/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-14">
+          <div class="inner">
+            
+            <header><h1>Merkle Tree (theoretically faulty version)</h1></header>
+            
+            
+            <section><pre>
+[leaf0] [leaf1] [leaf2] [leaf3]
+     \     /      \     /
+     [node0]      [node1]
+           \      /
+            [root]
+
+node0 = xor(hash(leaf0), hash(leaf1))
+node1 = xor(hash(leaf2)), hash(leaf3))
+root = xor(node0, node1)
+</pre>
+
+<h2>Proof algorithm</h2>
+<pre>
+bool verify(root, leaf, proof) {
+    let sum <- hash(leaf)
+    for step in proof {
+        sum <- xor(sum, step)
+    }
+    return sum == root
+}
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              14/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-15">
+          <div class="inner">
+            
+            <header><h1>Merkle Tree (theoretically faulty version)</h1></header>
+            
+            
+            <section><pre>
+[leaf0] [leaf1] [leaf2] [leaf3]
+     \     /      \     /
+     [node0]      [node1]
+           \      /
+            [root]
+
+node0 = xor(hash(leaf0), hash(leaf1))
+node1 = xor(hash(leaf2)), hash(leaf3))
+root = xor(node0, node1)
+</pre>
+
+<h2>Proof algorithm and hack</h2>
+<pre>
+bool verify(root, leaf, proof) {
+    let sum <- hash(leaf)
+    for step in proof {
+        sum <- xor(sum, step)
+    }
+    return sum == root
+}
+
+spoof = xor(node1, hash(newleaf))
+assert verify(root, newleaf, [spoof, node1])
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <ul>
+<li>By including the intermediate hashing step, now the attacker must find
+a preimage for the spoofed node derived from the xor operation, which is
+computationally infeasible.</li>
+</ul>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              15/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-16">
+          <div class="inner">
+            
+            <header><h1>Consensus Mechanisms</h1></header>
+            
+            
+            <section><p>Two types:</p>
+<ul>
+<li>Trusted: RAFT, Paxos, proof-of-authority, etc</li>
+<li>Trustless: proof-of-work</li>
+<li>Depends: proof-of-stake</li>
+</ul>
+<h2>Proof-of-work</h2>
+<ul>
+<li>Probabilistic settlement mechanism: accumulation of reinforcing proofs-of-work
+reduces likelihood of successful rewrite</li>
+<li>Hashcash: difficulty defined as preceding null bits in a hash function output</li>
+<li>Invented by Adam Beck to fix email spam, then used by Satoshi in Bitcoin for
+consensus</li>
+</ul></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <ul>
+<li>Proof-of-stake: trusted if initial minting and distribution were manual;
+trustless if initial minting and distribution were proof-of-work</li>
+</ul>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              16/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-17">
+          <div class="inner">
+            
+            <header><h1>History Detour: Bitcoin Whitepaper</h1></header>
+            
+            
+            <section><p><a href="bitcoin.pdf">bitcoin.pdf</a></p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              17/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-18">
+          <div class="inner">
+            
+            <header><h1>Virtual Machine</h1></header>
+            
+            
+            <section><p>Bitcoin script system: implementation detail omitted from whitepaper. All
+digital signatures are supplied in the form of unlocking scripts (witness data)
+that evaluates with the locking script to <code>true</code>.</p>
+<p>Exapmle locking script:</p>
+<p><code>OP_DUP OP_HASH160 &lt;pubkey hash&gt; OP_EQUALVERIFY OP_CHECKSIG</code></p>
+<p>Example unlocking script:</p>
+<p><code>&lt;signature&gt; &lt;pubkey&gt;</code></p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <ul>
+<li>Pay-to-pubkey-hash example</li>
+<li>Stack machine: unlocking script executes first</li>
+<li>Bitcoin script has changed significantly over the years, primarily through
+soft-forks (templates) and node policies (disabling or redefining ops)</li>
+</ul>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              18/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-19">
+          <div class="inner">
+            
+            <header><h1>Virtual Machine</h1></header>
+            
+            
+            <section><p><a href="https://rekt.news">Not always easy to get correct</a></p>
+<p><a href="https://pypi.org/project/tapescript/">Not even easy to experiment with</a></p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              19/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-20">
+          <div class="inner">
+            
+            <header><h1>Layer 2 (aka Off-Chain Solutions)</h1></header>
+            
+            
+            <section><p>Blockchains are inefficient databases and trade throughput for decentralization
+(or rather decentralization theater/hype in most cases). Scaling throughput is
+attempted via layer-2/off-chain systems that use on-chain transactions for
+initialization and settlement.</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              20/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-21">
+          <div class="inner">
+            
+            <header><h1>Payment Channels</h1></header>
+            
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              21/21
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div id="toc" class="sidebar hidden">
+    <h2>Table of Contents</h2>
+    <table>
+      <caption>Table of Contents</caption>
+      
+      <tr id="toc-row-1">
+        <th><a href="#slide1">Blockchain Technologies</a></th>
+        <td><a href="#slide1">1</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-2">
+        <th><a href="#slide2">Blockchain Primitives</a></th>
+        <td><a href="#slide2">2</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-3">
+        <th><a href="#slide3">Cryptography</a></th>
+        <td><a href="#slide3">3</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-4">
+        <th><a href="#slide4">Cryptographic Hash Functions</a></th>
+        <td><a href="#slide4">4</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-5">
+        <th><a href="#slide5">Example using SHA256 bitstrings:</a></th>
+        <td><a href="#slide5">5</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-6">
+        <th><a href="#slide6">Digital Signature Algorithms</a></th>
+        <td><a href="#slide6">6</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-7">
+        <th><a href="#slide7">Digital Signature Algorithms</a></th>
+        <td><a href="#slide7">7</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-8">
+        <th><a href="#slide8">Data Structures</a></th>
+        <td><a href="#slide8">8</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-9">
+        <th><a href="#slide9">Linked List</a></th>
+        <td><a href="#slide9">9</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-10">
+        <th><a href="#slide10">Linked List</a></th>
+        <td><a href="#slide10">10</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-11">
+        <th><a href="#slide11">Merkle Tree</a></th>
+        <td><a href="#slide11">11</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-12">
+        <th><a href="#slide12">Merkle Tree</a></th>
+        <td><a href="#slide12">12</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-13">
+        <th><a href="#slide13">Merkle Tree (Taproot Edition)</a></th>
+        <td><a href="#slide13">13</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-14">
+        <th><a href="#slide14">Merkle Tree (theoretically faulty version)</a></th>
+        <td><a href="#slide14">14</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-15">
+        <th><a href="#slide15">Merkle Tree (theoretically faulty version)</a></th>
+        <td><a href="#slide15">15</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-16">
+        <th><a href="#slide16">Consensus Mechanisms</a></th>
+        <td><a href="#slide16">16</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-17">
+        <th><a href="#slide17">History Detour: Bitcoin Whitepaper</a></th>
+        <td><a href="#slide17">17</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-18">
+        <th><a href="#slide18">Virtual Machine</a></th>
+        <td><a href="#slide18">18</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-19">
+        <th><a href="#slide19">Virtual Machine</a></th>
+        <td><a href="#slide19">19</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-20">
+        <th><a href="#slide20">Layer 2 (aka Off-Chain Solutions)</a></th>
+        <td><a href="#slide20">20</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-21">
+        <th><a href="#slide21">Payment Channels</a></th>
+        <td><a href="#slide21">21</a></td>
+      </tr>
+      
+      
+    </table>
+  </div>
+  
+  <div id="help" class="sidebar hidden">
+    <h2>Help</h2>
+    <table>
+      <caption>Help</caption>
+      <tr>
+        <th>Table of Contents</th>
+        <td>t</td>
+      </tr>
+      <tr>
+        <th>Exposé</th>
+        <td>ESC</td>
+      </tr>
+      <tr>
+        <th>Full screen slides</th>
+        <td>e</td>
+      </tr>
+      <tr>
+        <th>Presenter View</th>
+        <td>p</td>
+      </tr>
+      <tr>
+        <th>Source Files</th>
+        <td>s</td>
+      </tr>
+      <tr>
+        <th>Slide Numbers</th>
+        <td>n</td>
+      </tr>
+      <tr>
+        <th>Toggle screen blanking</th>
+        <td>b</td>
+      </tr>
+      <tr>
+        <th>Show/hide slide context</th>
+        <td>c</td>
+      </tr>
+      <tr>
+        <th>Notes</th>
+        <td>2</td>
+      </tr>
+      <tr>
+        <th>Help</th>
+        <td>h</td>
+      </tr>
+    </table>
+  </div>
+  <script>main()</script>
+</body>
+</html>
