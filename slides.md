@@ -344,7 +344,7 @@ computationally infeasible.
 
 # Consensus Mechanisms
 
-Two types:
+## Two types
 
 - Trusted: RAFT, Paxos, proof-of-authority, etc
 - Trustless: proof-of-work
@@ -483,17 +483,22 @@ anything definitive yet
 
 [Eltoo is a proposed L2 protocol for payment channels.](eltoo.pdf)
 
+[Proof-of-concept implementation](https://github.com/k98kurz/tapescript/blob/master/tests/test_e2e_eltoo.py)
+
 # Presenter Notes
 
 - Scroll through the eltoo pdf for a bit
 - Show the eltoo tapescript e2e test
-- Continue with show-and-tell
+- Continue with show-and-tell of tapescript stuff
 
 ---
 
 # There is no Conclusion
 
 But there might be questions.
+
+Presentation files available here:
+https://github.com/k98kurz/hacknwa-2024
 
 ---
 
