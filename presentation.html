@@ -83,7 +83,7 @@ by a consensus mechanism.</p></section>
             </aside>
             
             <aside class="page_number">
-              1/21
+              1/23
             </aside>
           </footer>
         </div>
@@ -120,7 +120,7 @@ by a consensus mechanism.</p></section>
             </aside>
             
             <aside class="page_number">
-              2/21
+              2/23
             </aside>
           </footer>
         </div>
@@ -154,7 +154,7 @@ by a consensus mechanism.</p></section>
             </aside>
             
             <aside class="page_number">
-              3/21
+              3/23
             </aside>
           </footer>
         </div>
@@ -199,7 +199,7 @@ per SHA256 output)</li>
             </aside>
             
             <aside class="page_number">
-              4/21
+              4/23
             </aside>
           </footer>
         </div>
@@ -240,7 +240,7 @@ per SHA256 output)</li>
             </aside>
             
             <aside class="page_number">
-              5/21
+              5/23
             </aside>
           </footer>
         </div>
@@ -281,7 +281,7 @@ authorization, or attestation.</p>
             </aside>
             
             <aside class="page_number">
-              6/21
+              6/23
             </aside>
           </footer>
         </div>
@@ -323,7 +323,7 @@ a PQ latice system for DHE and DSA).</p>
             </aside>
             
             <aside class="page_number">
-              7/21
+              7/23
             </aside>
           </footer>
         </div>
@@ -357,7 +357,7 @@ a PQ latice system for DHE and DSA).</p>
             </aside>
             
             <aside class="page_number">
-              8/21
+              8/23
             </aside>
           </footer>
         </div>
@@ -399,7 +399,7 @@ item1 = {
             </aside>
             
             <aside class="page_number">
-              9/21
+              9/23
             </aside>
           </footer>
         </div>
@@ -436,7 +436,7 @@ acyclic graph with maximum in-degree and out-degree of 1 for each node.</p></sec
             </aside>
             
             <aside class="page_number">
-              10/21
+              10/23
             </aside>
           </footer>
         </div>
@@ -490,7 +490,7 @@ cycles are impossible.</li>
             </aside>
             
             <aside class="page_number">
-              11/21
+              11/23
             </aside>
           </footer>
         </div>
@@ -554,7 +554,7 @@ that scales with the logarithm of the number of set members.</li>
             </aside>
             
             <aside class="page_number">
-              12/21
+              12/23
             </aside>
           </footer>
         </div>
@@ -613,7 +613,7 @@ flexible version of the Merkle tree that removes handedness in proofs.</li>
             </aside>
             
             <aside class="page_number">
-              13/21
+              13/23
             </aside>
           </footer>
         </div>
@@ -664,7 +664,7 @@ bool verify(root, leaf, proof) {
             </aside>
             
             <aside class="page_number">
-              14/21
+              14/23
             </aside>
           </footer>
         </div>
@@ -724,7 +724,7 @@ computationally infeasible.</li>
             </aside>
             
             <aside class="page_number">
-              15/21
+              15/23
             </aside>
           </footer>
         </div>
@@ -761,6 +761,8 @@ consensus</li>
               <ul>
 <li>Proof-of-stake: trusted if initial minting and distribution were manual;
 trustless if initial minting and distribution were proof-of-work</li>
+<li>I have not experimented with non-PoW enough to say anything definitive</li>
+<li>Most problems can be solved without consensus, which is costly; e.g. CRDTs (which I have implemented)</li>
 </ul>
             
             </section>
@@ -772,7 +774,7 @@ trustless if initial minting and distribution were proof-of-work</li>
             </aside>
             
             <aside class="page_number">
-              16/21
+              16/23
             </aside>
           </footer>
         </div>
@@ -793,6 +795,11 @@ trustless if initial minting and distribution were proof-of-work</li>
             <header><h1>Presenter Notes</h1></header>
             <section>
             
+              <ul>
+<li>Scroll through, read section headers, and mention relevant technological primitives</li>
+<li>Note that something important is missing from the whitepaper; see if anyone in the audience can guess</li>
+</ul>
+            
             </section>
           </div>
           <footer>
@@ -802,7 +809,7 @@ trustless if initial minting and distribution were proof-of-work</li>
             </aside>
             
             <aside class="page_number">
-              17/21
+              17/23
             </aside>
           </footer>
         </div>
@@ -818,7 +825,10 @@ trustless if initial minting and distribution were proof-of-work</li>
             
             <section><p>Bitcoin script system: implementation detail omitted from whitepaper. All
 digital signatures are supplied in the form of unlocking scripts (witness data)
-that evaluates with the locking script to <code>true</code>.</p>
+that evaluates with the locking script to <code>true</code>. "Bitcoin Script is a language
+for expressing challenges that lock the coins. Bitcoin Script was designed to
+ensure low verification cost and enable running a Bitcoin node on low-tier
+hardware." (Coinpool whitepaper)</p>
 <p>Exapmle locking script:</p>
 <p><code>OP_DUP OP_HASH160 &lt;pubkey hash&gt; OP_EQUALVERIFY OP_CHECKSIG</code></p>
 <p>Example unlocking script:</p>
@@ -845,7 +855,7 @@ soft-forks (templates) and node policies (disabling or redefining ops)</li>
             </aside>
             
             <aside class="page_number">
-              18/21
+              18/23
             </aside>
           </footer>
         </div>
@@ -860,7 +870,12 @@ soft-forks (templates) and node policies (disabling or redefining ops)</li>
             
             
             <section><p><a href="https://rekt.news">Not always easy to get correct</a></p>
-<p><a href="https://pypi.org/project/tapescript/">Not even easy to experiment with</a></p></section>
+<p><a href="https://pypi.org/project/tapescript/">But there's an easy way to experiment with it</a></p>
+<p><a href="https://github.com/k98kurz/tapescript/blob/master/script_examples.md">And I have a lot of examples</a></p>
+<p><a href="https://github.com/k98kurz/tapescript/tree/master/tests/vectors">And more</a></p>
+<p><a href="https://github.com/k98kurz/tapescript/blob/master/tests/test_functions.py">And more</a></p>
+<p><a href="https://github.com/k98kurz/tapescript/blob/master/tests/test_tools.py">And more</a></p>
+<p><a href="https://github.com/k98kurz/tapescript/blob/master/tests/test_e2e_eltoo.py">And even more</a></p></section>
             
           </div>
           <div class="presenter_notes">
@@ -876,7 +891,7 @@ soft-forks (templates) and node policies (disabling or redefining ops)</li>
             </aside>
             
             <aside class="page_number">
-              19/21
+              19/23
             </aside>
           </footer>
         </div>
@@ -909,7 +924,7 @@ initialization and settlement.</p></section>
             </aside>
             
             <aside class="page_number">
-              20/21
+              20/23
             </aside>
           </footer>
         </div>
@@ -923,10 +938,28 @@ initialization and settlement.</p></section>
             <header><h1>Payment Channels</h1></header>
             
             
+            <section><p>Problem: Alice and Bob want to pay each other without incurring fees for each payment.</p>
+<p>Solution:</p>
+<ol>
+<li>Deposit funds into a multi-sig wallet</li>
+<li>Create a floating transaction that refunds themselves</li>
+<li>Create a new floating txn that updates balances and invalidates old floating
+txn for each payment</li>
+<li>Settle eventually by confirming the latest floating txn on the blockchain</li>
+</ol></section>
+            
           </div>
           <div class="presenter_notes">
             <header><h1>Presenter Notes</h1></header>
             <section>
+            
+              <ul>
+<li>Payment channel protocols rely upon the capabilities of the underlying protocol</li>
+<li>Current Lightning Network system uses a punishment clause to prevent abuse but
+wrecks faulty nodes</li>
+<li>Several proposals exist for new L2 systems, e.g. Coinpool (2 sig flags + 1 op)
+and Eltoo (1 sig flag + 1 op change)</li>
+</ul>
             
             </section>
           </div>
@@ -937,7 +970,86 @@ initialization and settlement.</p></section>
             </aside>
             
             <aside class="page_number">
-              21/21
+              21/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-22">
+          <div class="inner">
+            
+            <header><h1>Payment Channel Networks</h1></header>
+            
+            
+            <section><p>Problem: Alice wants to pay Carla but does not have a payment channel with her,
+but both have a payment channel with Bob.</p>
+<p>Solution: route payments through Bob.</p>
+<ol>
+<li>Alice constructs an HTLC txn paying Bob.</li>
+<li>Bob contstructs an HTLC txn paying Carla.</li>
+<li>Alice releases the hash lock. Bob and Carla get paid simultaneously.</li>
+</ol>
+<p>This model generalizes as long as a payment route with sufficient liquidity can
+be found. (Payment routing is its own topic.)</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <ul>
+<li>I have not finished implementing any greedy routing algorithms, so I can't say
+anything definitive yet</li>
+</ul>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              22/23
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.md -->
+      <div class="slide-wrapper">
+        <div class="slide slide-23">
+          <div class="inner">
+            
+            <header><h1>Eltoo</h1></header>
+            
+            
+            <section><p><a href="eltoo.pdf">Eltoo is a proposed L2 protocol for payment channels.</a></p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+              <ul>
+<li>Scroll through the eltoo pdf for a bit</li>
+<li>Show the eltoo tapescript e2e test</li>
+</ul>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.md">slides.md</a>
+            </aside>
+            
+            <aside class="page_number">
+              23/23
             </aside>
           </footer>
         </div>
@@ -1074,6 +1186,18 @@ initialization and settlement.</p></section>
       <tr id="toc-row-21">
         <th><a href="#slide21">Payment Channels</a></th>
         <td><a href="#slide21">21</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-22">
+        <th><a href="#slide22">Payment Channel Networks</a></th>
+        <td><a href="#slide22">22</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-23">
+        <th><a href="#slide23">Eltoo</a></th>
+        <td><a href="#slide23">23</a></td>
       </tr>
       
       

@@ -352,6 +352,8 @@ consensus
 
 - Proof-of-stake: trusted if initial minting and distribution were manual;
 trustless if initial minting and distribution were proof-of-work
+- I have not experimented with non-PoW enough to say anything definitive
+- Most problems can be solved without consensus, which is costly; e.g. CRDTs (which I have implemented)
 
 ---
 
@@ -359,14 +361,21 @@ trustless if initial minting and distribution were proof-of-work
 
 [bitcoin.pdf](bitcoin.pdf)
 
----
+# Presenter Notes
 
+- Scroll through, read section headers, and mention relevant technological primitives
+- Note that something important is missing from the whitepaper; see if anyone in the audience can guess
+
+---
 
 # Virtual Machine
 
 Bitcoin script system: implementation detail omitted from whitepaper. All
 digital signatures are supplied in the form of unlocking scripts (witness data)
-that evaluates with the locking script to `true`.
+that evaluates with the locking script to `true`. "Bitcoin Script is a language
+for expressing challenges that lock the coins. Bitcoin Script was designed to
+ensure low verification cost and enable running a Bitcoin node on low-tier
+hardware." (Coinpool whitepaper)
 
 Exapmle locking script:
 
@@ -393,7 +402,17 @@ soft-forks (templates) and node policies (disabling or redefining ops)
 
 [Not always easy to get correct](https://rekt.news)
 
-[Not even easy to experiment with](https://pypi.org/project/tapescript/)
+[But there's an easy way to experiment with it](https://pypi.org/project/tapescript/)
+
+[And I have a lot of examples](https://github.com/k98kurz/tapescript/blob/master/script_examples.md)
+
+[And more](https://github.com/k98kurz/tapescript/tree/master/tests/vectors)
+
+[And more](https://github.com/k98kurz/tapescript/blob/master/tests/test_functions.py)
+
+[And more](https://github.com/k98kurz/tapescript/blob/master/tests/test_tools.py)
+
+[And even more](https://github.com/k98kurz/tapescript/blob/master/tests/test_e2e_eltoo.py)
 
 ---
 
@@ -408,7 +427,55 @@ initialization and settlement.
 
 # Payment Channels
 
+Problem: Alice and Bob want to pay each other without incurring fees for each payment.
 
+Solution:
+
+1. Deposit funds into a multi-sig wallet
+2. Create a floating transaction that refunds themselves
+3. Create a new floating txn that updates balances and invalidates old floating
+txn for each payment
+4. Settle eventually by confirming the latest floating txn on the blockchain
+
+# Presenter Notes
+
+- Payment channel protocols rely upon the capabilities of the underlying protocol
+- Current Lightning Network system uses a punishment clause to prevent abuse but
+wrecks faulty nodes
+- Several proposals exist for new L2 systems, e.g. Coinpool (2 sig flags + 1 op)
+and Eltoo (1 sig flag + 1 op change)
+
+---
+
+# Payment Channel Networks
+
+Problem: Alice wants to pay Carla but does not have a payment channel with her,
+but both have a payment channel with Bob.
+
+Solution: route payments through Bob.
+
+1. Alice constructs an HTLC txn paying Bob.
+2. Bob contstructs an HTLC txn paying Carla.
+3. Alice releases the hash lock. Bob and Carla get paid simultaneously.
+
+This model generalizes as long as a payment route with sufficient liquidity can
+be found. (Payment routing is its own topic.)
+
+# Presenter Notes
+
+- I have not finished implementing any greedy routing algorithms, so I can't say
+anything definitive yet
+
+---
+
+# Eltoo
+
+[Eltoo is a proposed L2 protocol for payment channels.](eltoo.pdf)
+
+# Presenter Notes
+
+- Scroll through the eltoo pdf for a bit
+- Show the eltoo tapescript e2e test
 
 
 
