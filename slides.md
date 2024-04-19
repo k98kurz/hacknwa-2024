@@ -355,7 +355,7 @@ computationally infeasible.
 - Probabilistic settlement mechanism: accumulation of reinforcing proofs-of-work
 reduces likelihood of successful rewrite
 - Hashcash: difficulty defined as preceding null bits in a hash function output
-- Invented by Adam Beck to fix email spam, then used by Satoshi in Bitcoin for
+- Invented by Adam Back to fix email spam, then used by Satoshi in Bitcoin for
 consensus
 
 # Presenter Notes
