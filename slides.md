@@ -1,5 +1,15 @@
 # Blockchain Technologies
 
+HackNWA 2024
+
+Jonathan Voss
+
+Ramblings on an interesting topic
+
+---
+
+# Blockchain Technologies
+
 ## Introduction
 
 Three sections:
@@ -266,7 +276,7 @@ flexible version of the Merkle tree that removes handedness in proofs.
 
 ---
 
-# Merkle Tree (theoretically faulty version)
+# Merkle Tree (theoretical faulty version)
 
 <pre>
 [leaf0] [leaf1] [leaf2] [leaf3]
@@ -295,7 +305,7 @@ bool verify(root, leaf, proof) {
 
 ---
 
-# Merkle Tree (theoretically faulty version)
+# Merkle Tree (theoretical faulty version)
 
 <pre>
 [leaf0] [leaf1] [leaf2] [leaf3]
@@ -377,7 +387,7 @@ for expressing challenges that lock the coins. Bitcoin Script was designed to
 ensure low verification cost and enable running a Bitcoin node on low-tier
 hardware." (Coinpool whitepaper)
 
-Exapmle locking script:
+Example locking script:
 
 ```
 OP_DUP OP_HASH160 <pubkey hash> OP_EQUALVERIFY OP_CHECKSIG
@@ -393,6 +403,7 @@ Example unlocking script:
 
 - Pay-to-pubkey-hash example
 - Stack machine: unlocking script executes first
+- The source of Bitcoin's L2 capabilities
 - Bitcoin script has changed significantly over the years, primarily through
 soft-forks (templates) and node policies (disabling or redefining ops)
 
@@ -468,7 +479,7 @@ anything definitive yet
 
 ---
 
-# Eltoo
+# Eltoo / Show-and-Tell
 
 [Eltoo is a proposed L2 protocol for payment channels.](eltoo.pdf)
 
@@ -476,6 +487,13 @@ anything definitive yet
 
 - Scroll through the eltoo pdf for a bit
 - Show the eltoo tapescript e2e test
+- Continue with show-and-tell
 
+---
 
+# There is no Conclusion
+
+But there might be questions.
+
+---
 
