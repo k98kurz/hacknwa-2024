@@ -493,6 +493,22 @@ anything definitive yet
 
 ---
 
+# Advanced Cryptography
+
+Some advanced cryptography constructs:
+
+1. Adapter signatures
+2. Anonymous Multi-Hop Locks (AMHL)
+3. MuSig: multi-party Schnorr signatures
+
+# Presenter Notes
+
+1. Tapescript code base
+2. Tapescript code base
+3. MuSig code base
+
+---
+
 # There is no Conclusion
 
 But there might be questions.
